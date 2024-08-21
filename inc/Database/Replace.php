@@ -335,7 +335,7 @@ class Replace {
 
 		// Some unserialized data cannot be re-serialised eg. SimpleXMLElements.
 		try {
-			$unserialized = is_serialized( $data, false ) ? maybe_unserialize( $data ) : false;
+			$unserialized = is_serialized( $data, false ) ? $this->maybe_unserialize_safe( $data ) : false;
 
 			if ( $unserialized !== false && ! is_serialized_string( $data ) ) {
 				$data = $this->recursive_unserialize_replace( $from, $to, $unserialized, false );
@@ -369,7 +369,7 @@ class Replace {
 
 				if ( is_serialized_string( $data ) ) {
 					// @codingStandardsIgnoreLine
-					$data   = maybe_unserialize( $data );
+					$data   = $this->maybe_unserialize_safe( $data );
 					$marker = true;
 				}
 
@@ -427,5 +427,23 @@ class Replace {
 		}
 
 		return $state;
+	}
+
+	/**
+	 * Unserializes data only if it was serialized.
+	 * unserialize function is called with allowed_classes set to false
+	 * to ensure no object instantiation and magic function calls.
+	 *
+	 * @since 3.2.3
+	 *
+	 * @param string $data Data that might be unserialized.
+	 * @return mixed Unserialized data can be any type.
+	 */
+	public function maybe_unserialize_safe( $data ) {
+		if ( is_serialized( $data ) ) {
+			return @unserialize( trim( $data ), array('allowed_classes' => false ) );
+		}
+	
+		return $data;
 	}
 }

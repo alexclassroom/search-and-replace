@@ -142,13 +142,4 @@ abstract class AbstractTestCase extends TestCase {
 
 		return $data;
 	}
-
-	public function maybe_unserialize( $data ) {
-
-		if ( is_serialized( $data ) ) {
-			return @unserialize( $data );
-		}
-
-		return $data;
-	}
 }

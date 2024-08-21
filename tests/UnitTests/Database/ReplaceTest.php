@@ -316,9 +316,6 @@ class ReplaceTest extends AbstractTestCase {
 		\Brain\Monkey\Functions\when( 'maybe_serialize' )
 			->alias( [ $this, 'maybe_serialize' ] );
 
-		\Brain\Monkey\Functions\when( 'maybe_unserialize' )
-			->alias( [ $this, 'maybe_unserialize' ] );
-
 		$dbm_mock = \Mockery::mock(
 			'\Inpsyde\SearchReplace\Database\Manager',
 			[ \Mockery::mock( '\wpdb' ) ]
@@ -362,9 +359,6 @@ class ReplaceTest extends AbstractTestCase {
 
 		\Brain\Monkey\Functions\when( 'maybe_serialize' )
 			->alias( [ $this, 'maybe_serialize' ] );
-
-		\Brain\Monkey\Functions\when( 'maybe_unserialize' )
-			->alias( [ $this, 'maybe_unserialize' ] );
 
 		$manager_mock       = \Mockery::mock( 'Inpsyde\\SearchReplace\\Database\\Manager' );
 		$max_exec_time_mock = \Mockery::mock( 'Inpsyde\\SearchReplace\\Service\\MaxExecutionTime' );
