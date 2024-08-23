@@ -349,15 +349,25 @@ class Replace {
 
 				unset( $_tmp );
 			} elseif ( is_object( $data ) ) {
-				$_tmp  = $data;
-				$props = get_object_vars( $data );
-				foreach ( $props as $key => $value ) {
-					$_tmp->$key = $this->recursive_unserialize_replace( $from, $to, $value, false );
+				if ( $this->is_cloneable( $data ) ) {
+					$_tmp  = clone $data;
+					$props = get_object_vars( $data );
+					foreach ( $props as $key => $value ) {
+						// PHP handles weirdly properties with integer names
+						if ( is_int( $key ) ) {
+							continue;
+						}
+						// Skip protected properties
+						if ( is_string( $key ) && preg_match( "/^(\\\\0).+/im", preg_quote( $key ) ) === 1 ) {
+							continue;
+						}
+						$_tmp->$key = $this->recursive_unserialize_replace( $from, $to, $value, false );
+					}
+
+					$data = $_tmp;
+
+					unset( $_tmp );
 				}
-
-				$data = $_tmp;
-
-				unset( $_tmp );
 			} else {
 				// Don't process data that isn't a string.
 				// In this case, just return it because we haven't coverage for this kind of value.
@@ -445,5 +455,16 @@ class Replace {
 		}
 	
 		return $data;
+	}
+
+	/**
+	 * Returns true if the object can be cloned.
+	 *
+	 * @param object $object
+	 *
+	 * @return bool
+	 */
+	private function is_cloneable( $object ) {
+		return ( new \ReflectionClass( get_class( $object ) ) )->isCloneable();
 	}
 }
