@@ -64,8 +64,9 @@ You want to donate - we prefer a [positive review](https://wordpress.org/support
 5. Result screen after search or search and replace
 
 == Changelog ==
-= 3.2.3 (2024-08-22) =
-* Fixed a vulnerability when deserializing objects from the database
+= 3.2.3 (2024-08-26) =
+* Fix a vulnerability when deserializing objects from the database
+* Fix deprecation logs about optional parameters declared before required parameters
 
 = 3.2.2 (2024-05-16) =
 * Now owned by WP Media
