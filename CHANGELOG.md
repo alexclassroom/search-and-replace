@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.2.3 (2024-08-26)
+* Fix a vulnerability when deserializing objects from the database
+* Fix deprecation logs about optional parameters declared before required parameters
+
+## 3.2.2 (2024-05-16)
+* Now owned by WP Media
+* Fixed potential time based SQL injection
+
 ## 3.2.1 (2019-06-06)
 * Update readme for tested up WP versions
 * Add check for replace function to get more solid replace for custom tables. [#132](https://github.com/inpsyde/search-and-replace/pull/132/files)
