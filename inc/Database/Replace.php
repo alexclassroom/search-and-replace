@@ -348,7 +348,7 @@ class Replace {
 				$data = $_tmp;
 
 				unset( $_tmp );
-			} elseif ( is_object( $data ) ) {
+			} elseif ( 'object' == gettype( $data ) ) {
 				if ( $this->is_cloneable( $data ) ) {
 					$_tmp  = clone $data;
 					$props = get_object_vars( $data );
